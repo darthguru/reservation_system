@@ -301,7 +301,7 @@ def update_delivered_qty(doc,event):
 						sl_qty = 0.0
 
 # ------------------------------------------------------------ Stock Transfer Entry ------------------------------------------------------
-	if doc.voucher_type == 'Stock Entry' and doc.stock_entry_type == 'Material Transfer':
+	if doc.voucher_type == 'Stock Entry':
 		print('---------------------------------- voucher_type : Stock Transfer Entry -----------------------------------------')
 		
 		sle_item_code = doc.item_code
@@ -338,18 +338,19 @@ def update_delivered_qty(doc,event):
 											WHERE
 											parent = '{sle_voucher_no}'
 										""",as_dict=1)[0]
+		if stock_entry_detail.s_warehouse:
+			s_parent_warehouse_name = frappe.db.sql(f"""
+														SELECT parent_warehouse FROM `tabWarehouse`
+														WHERE
+														name = '{stock_entry_detail.s_warehouse}'
+													""",as_dict=1)[0]
 
-		s_parent_warehouse_name = frappe.db.sql(f"""
-													SELECT parent_warehouse FROM `tabWarehouse`
-													WHERE
-													name = '{stock_entry_detail.s_warehouse}'
-												""",as_dict=1)[0]
-
-		t_parent_warehouse_name = frappe.db.sql(f"""
-													SELECT parent_warehouse FROM `tabWarehouse`
-													WHERE
-													name = '{stock_entry_detail.t_warehouse}'
-												""",as_dict=1)[0]
+		if stock_entry_detail.t_warehouse:
+			t_parent_warehouse_name = frappe.db.sql(f"""
+														SELECT parent_warehouse FROM `tabWarehouse`
+														WHERE
+														name = '{stock_entry_detail.t_warehouse}'
+													""",as_dict=1)[0]
 		if sle_qty > 0:
 			if len(reservation_schedule_doc) != 0: # Means There is no open reservation whose status is open
 				if reservation_schedule_doc[0].item_code != None:
