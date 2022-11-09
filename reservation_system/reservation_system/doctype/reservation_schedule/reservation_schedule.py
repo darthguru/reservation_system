@@ -193,6 +193,7 @@ def reserve_item(item, parent_warehouse):
 
 	set_status(item.parent) # Here we updating the status
 
+
 # to extract items from database using so_number or quotation
 @frappe.whitelist()
 def get_items(**args):
