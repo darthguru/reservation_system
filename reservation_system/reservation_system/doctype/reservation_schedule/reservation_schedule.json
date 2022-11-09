@@ -1,0 +1,148 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "RES-.####",
+ "creation": "2022-09-17 10:46:58.492286",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "customer",
+  "select",
+  "so_number",
+  "so_date",
+  "quotation",
+  "so_posting_date",
+  "quot_posting_date",
+  "reserve_till",
+  "company",
+  "parent_warehouse",
+  "status",
+  "items",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "select",
+   "fieldtype": "Select",
+   "label": "Select",
+   "options": "\nSO Number\nQuotation"
+  },
+  {
+   "depends_on": "eval: doc.select == 'SO Number'",
+   "fieldname": "so_number",
+   "fieldtype": "Link",
+   "label": "SO Number",
+   "options": "Sales Order",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval: doc.select == 'Quotation'",
+   "fieldname": "quotation",
+   "fieldtype": "Link",
+   "label": "Quotation",
+   "options": "Quotation"
+  },
+  {
+   "fieldname": "reserve_till",
+   "fieldtype": "Date",
+   "label": "Reserve Till"
+  },
+  {
+   "default": "Dhupar Brothers Trading Pvt. Ltd.",
+   "fieldname": "company",
+   "fieldtype": "Data",
+   "label": "Company",
+   "read_only": 1
+  },
+  {
+   "fieldname": "parent_warehouse",
+   "fieldtype": "Link",
+   "label": "Parent Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Draft\nOpen\nComplete\nClose\nCancelled",
+   "print_hide": 1,
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Reservation Schedule",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Reservation Schedule Item"
+  },
+  {
+   "depends_on": "eval: doc.select == 'SO Number'",
+   "fetch_from": "so_number.transaction_date",
+   "fieldname": "so_posting_date",
+   "fieldtype": "Data",
+   "label": "Posting Date"
+  },
+  {
+   "depends_on": "eval: doc.select == 'Quotation'",
+   "fetch_from": "quotation.transaction_date",
+   "fieldname": "quot_posting_date",
+   "fieldtype": "Data",
+   "label": " Posting Date"
+  },
+  {
+   "fieldname": "so_date",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "SO_Date"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2022-10-12 14:56:37.761647",
+ "modified_by": "Administrator",
+ "module": "Reservation System",
+ "name": "Reservation Schedule",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
