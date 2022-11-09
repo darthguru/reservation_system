@@ -171,6 +171,7 @@ def reserve_item(item, parent_warehouse):
 		if new_wh_qty > item.qty:
 			reserve_qty = item.qty - qty
 			item.db_set('reserve_qty',reserve_qty)
+			print('write --> reserve_qty : ',reserve_qty)
 		else:
 			print('reserve_qty else')
 			if item.qty != item.delivered_qty:
@@ -179,31 +180,16 @@ def reserve_item(item, parent_warehouse):
 				if reserve_qty <= 0 :
 					reserve_qty = new_wh_qty
 					item.db_set('reserve_qty',reserve_qty)
+					print('write --> reserve_qty : ',reserve_qty)
 				else:
 					item.db_set('reserve_qty',reserve_qty)
+					print('write --> reserve_qty : ',reserve_qty)
 			else:
 				item.db_set('reserve_qty',0)
+				print('write --> reserve_qty : ',reserve_qty)
 	else:
 		reserve_qty = 0
 		item.db_set('reserve_qty',reserve_qty)
-
-	# new_wh_qty = actual_qty_in_wh - already_allocated
-	# print('new_wh_qty : ',new_wh_qty)
-	# balance_qty = item.qty - item.delivered_qty
-
-	# if new_wh_qty > 0 :
-	# 	if balance_qty > item.qty:
-	# 		reserve_qty = item.qty - qty
-	# 		item.db_set('reserve_qty',reserve_qty)
-	# 		print('write --> reserve_qty : ',reserve_qty)
-	# 	else:
-	# 		reserve_qty = balance_qty
-	# 		item.db_set('reserve_qty',reserve_qty)
-	# 		print('write --> reserve_qty : ',reserve_qty)
-	# else:
-	# 	reserve_qty = 0
-	# 	item.db_set('reserve_qty',reserve_qty)
-	# 	print('write --> reserve_qty : ',reserve_qty)
 
 	set_status(item.parent) # Here we updating the status
 
