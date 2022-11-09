@@ -301,7 +301,7 @@ def update_delivered_qty(doc,event):
 						sl_qty = 0.0
 
 # ------------------------------------------------------------ Stock Transfer Entry ------------------------------------------------------
-	if doc.voucher_type == 'Stock Entry':
+	if doc.voucher_type == 'Stock Entry' and doc.stock_entry_type == 'Material Transfer':
 		print('---------------------------------- voucher_type : Stock Transfer Entry -----------------------------------------')
 		
 		sle_item_code = doc.item_code
