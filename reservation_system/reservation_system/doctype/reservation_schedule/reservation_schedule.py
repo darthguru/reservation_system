@@ -1,7 +1,6 @@
 # Copyright (c) 2022, ajay patole and contributors
 # For license information, please see license.txt
 
-from ast import And
 import frappe
 from frappe.model.document import Document
 from frappe.utils  import getdate,nowdate,flt
@@ -67,7 +66,7 @@ class ReservationSchedule(Document):
 					continue
 
 			message = f"{' - '.join(item_list)} items already reserve against the same sales order"
-			
+
 			# Again Define to print error message
 			if len(items) != 0:
 					if items[0].item_code == item_code and items[0].so_detail == so_number:
@@ -186,7 +185,6 @@ def reserve_item(item, parent_warehouse):
 					print('write --> reserve_qty : ',reserve_qty)
 			else:
 				item.db_set('reserve_qty',0)
-				print('write --> reserve_qty : ',reserve_qty)
 	else:
 		reserve_qty = 0
 		item.db_set('reserve_qty',reserve_qty)
@@ -346,13 +344,12 @@ def update_delivered_qty(doc,event):
 													WHERE
 													name = '{stock_entry_detail.s_warehouse}'
 												""",as_dict=1)[0]
+
 		t_parent_warehouse_name = frappe.db.sql(f"""
 													SELECT parent_warehouse FROM `tabWarehouse`
 													WHERE
 													name = '{stock_entry_detail.t_warehouse}'
 												""",as_dict=1)[0]
-
-
 		if sle_qty > 0:
 			if len(reservation_schedule_doc) != 0: # Means There is no open reservation whose status is open
 				if reservation_schedule_doc[0].item_code != None:
@@ -367,13 +364,13 @@ def update_delivered_qty(doc,event):
 
 							new_reserve_qty = rs_qty - (rs_reserve_qty + rs_delivered_qty)
 							print('new_reserve_qty: ',new_reserve_qty)
-							
+
 							if rs_qty != rs_reserve_qty:
 								if sle_qty >= new_reserve_qty:
 									if new_reserve_qty > 0 :
 										new_reserve = rs_reserve_qty + new_reserve_qty
 										frappe.db.set_value('Reservation Schedule Item', i.name,
-															'reserve_qty',new_reserve)	
+															'reserve_qty',new_reserve)
 										sle_qty = sle_qty - new_reserve_qty
 										print('sle_qty in if: ',sle_qty)
 								else:
@@ -387,7 +384,7 @@ def update_delivered_qty(doc,event):
 						rs_qty = float(reservation_schedule_doc[0].qty)
 						rs_reserve_qty = float(reservation_schedule_doc[0].reserve_qty)
 
-						actual_qty_in_wh = stock_entry_detail.actual_qty					
+						actual_qty_in_wh = stock_entry_detail.actual_qty
 						open_qty = actual_qty_in_wh - rs_reserve_qty
 						print('actual_qty_in_wh: ',actual_qty_in_wh)
 						print('rs_reserve_qty: ',rs_reserve_qty)
@@ -401,7 +398,6 @@ def update_delivered_qty(doc,event):
 							if open_qty < -(sle_qty):
 								msg = f'Only {open_qty} qty are allowed for Transfer'
 								frappe.throw(msg)
-
 
 
 #----------------------------------------------------------Hook on_cancel: Purchase Receipt------------------------------------------------
@@ -620,15 +616,6 @@ def make_pick_list(source_name, target_doc=None, skip_item_mapping=False):
 		target.qty = qty_to_be_picked
 		target.stock_qty = qty_to_be_picked * flt(source.conversion_factor)
 
-	def update_packed_item_qty(source, target, source_parent) -> None:
-		qty = flt(source.qty)
-		for item in source_parent.items:
-			if source.parent_detail_docname == item.name:
-				picked_qty = flt(item.picked_qty) / (flt(item.conversion_factor) or 1)
-				pending_percent = (item.qty - max(picked_qty, item.delivered_qty)) / item.qty
-				target.qty = target.stock_qty = qty * pending_percent
-				return
-
 	def should_pick_order_item(item) -> bool:
 		return (
 			abs(item.delivered_qty) < abs(item.qty)
@@ -650,7 +637,6 @@ def make_pick_list(source_name, target_doc=None, skip_item_mapping=False):
 				"postprocess": update_item_quantity,
 				"condition": should_pick_order_item,
 			},
-			
 		},
 		target_doc,
 	)
