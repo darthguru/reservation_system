@@ -10,7 +10,7 @@ from frappe.model.mapper import get_mapped_doc
 class ReservationSchedule(Document):
 	def validate(self):
 		self.check_reserve_till()
-		# self.restrict_duplicate_item_reservaton()
+		self.restrict_duplicate_item_reservaton()
 
 		flag = 1
 		for i in self.items:
@@ -192,7 +192,6 @@ def reserve_item(item, parent_warehouse):
 		item.db_set('reserve_qty',reserve_qty)
 
 	set_status(item.parent) # Here we updating the status
-
 
 # to extract items from database using so_number or quotation
 @frappe.whitelist()
