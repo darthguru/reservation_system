@@ -95,16 +95,25 @@ frappe.ui.form.on('Reservation Schedule', {
     },
 });
 
+//button 
 frappe.ui.form.on('Reservation Schedule', {
 	refresh: function(frm) {
+		//create delivery note and pick list
 		if (frm.doc.docstatus == 1 && frm.doc.status != 'Complete' && frm.doc.status != 'Draft') {
 			frm.add_custom_button(__('Pick List'), () => make_pick_list(), __('Create'));
 			frm.add_custom_button(__('Delivery Note'), () => make_delivery_note(), __('Create'));
 			frm.page.set_inner_btn_group_as_primary(__('Create'));
 		}
+
+		// Status Button (Hold and Close)
+		if (frm.doc.docstatus == 1 && frm.doc.status != 'Complete' && frm.doc.status != 'Draft') {
+			frm.add_custom_button(__('Hold'), () => change_status_to_hold(), __('Status'));
+			frm.add_custom_button(__('Close'), () => change_status_to_close(), __('Status'));
+		}
 	},
 });
 
+// Create Delivery Note button
 function make_delivery_note() {
 	frappe.model.open_mapped_doc({
 		method: "reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.make_delivery_note",
@@ -112,11 +121,30 @@ function make_delivery_note() {
 	})
 }
 
+// Create Pick List Button
 function make_pick_list() {
 	frappe.model.open_mapped_doc({
 		method: "reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.make_pick_list",
 		frm: cur_frm
 	})
 }
+
+// Hold Button
+function change_status_to_hold() {
+	frappe.model.open_mapped_doc({
+		method: "reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.change_status_to_hold",
+		frm: cur_frm
+	})
+}
+
+// Close Button
+function change_status_to_close() {
+	frappe.model.open_mapped_doc({
+		method: "reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.change_status_to_close",
+		frm: cur_frm
+	})
+}
+
+
 
 

@@ -78,7 +78,7 @@
    "in_list_view": 1,
    "label": "Status",
    "no_copy": 1,
-   "options": "Draft\nOpen\nComplete\nClose\nCancelled",
+   "options": "Draft\nOpen\nComplete\nHold\nClose\nCancelled",
    "print_hide": 1,
    "read_only": 1,
    "reqd": 1
@@ -122,7 +122,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-10-12 14:56:37.761647",
+ "modified": "2022-11-09 17:36:17.207200",
  "modified_by": "Administrator",
  "module": "Reservation System",
  "name": "Reservation Schedule",
