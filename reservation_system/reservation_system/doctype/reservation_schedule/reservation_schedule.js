@@ -99,16 +99,23 @@ frappe.ui.form.on('Reservation Schedule', {
 frappe.ui.form.on('Reservation Schedule', {
 	refresh: function(frm) {
 		//create delivery note and pick list
-		if (frm.doc.docstatus == 1 && frm.doc.status != 'Complete' && frm.doc.status != 'Draft') {
+		if (frm.doc.docstatus == 1 && frm.doc.status != 'Complete' && frm.doc.status != 'Draft' && frm.doc.status != 'Hold' && frm.doc.status != 'Close') {
 			frm.add_custom_button(__('Pick List'), () => make_pick_list(), __('Create'));
 			frm.add_custom_button(__('Delivery Note'), () => make_delivery_note(), __('Create'));
 			frm.page.set_inner_btn_group_as_primary(__('Create'));
 		}
 
 		// Status Button (Hold and Close)
-		if (frm.doc.docstatus == 1 && frm.doc.status != 'Complete' && frm.doc.status != 'Draft') {
+		if (frm.doc.docstatus == 1 && frm.doc.status != 'Complete' && frm.doc.status != 'Draft' && frm.doc.status != 'Hold' && frm.doc.status != 'Close') {
 			frm.add_custom_button(__('Hold'), () => change_status_to_hold(), __('Status'));
 			frm.add_custom_button(__('Close'), () => change_status_to_close(), __('Status'));
+		}
+
+		if (frm.doc.status == 'Hold'){
+			frm.add_custom_button(__('Reopen'), () => reopen_hold_doc());
+		}
+		if (frm.doc.status == 'Close'){
+			frm.add_custom_button(__('Reopen'), () => reopen_close_doc());
 		}
 	},
 });
@@ -131,20 +138,55 @@ function make_pick_list() {
 
 // Hold Button
 function change_status_to_hold() {
-	frappe.model.open_mapped_doc({
-		method: "reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.change_status_to_hold",
-		frm: cur_frm
+	frappe.call({
+		method:"reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.change_status_to_hold",
+		args: {
+			"source_name": cur_frm.doc.name,
+		},
+		callback : function(r) {
+			cur_frm.reload_doc();
+		},
 	})
 }
 
 // Close Button
 function change_status_to_close() {
-	frappe.model.open_mapped_doc({
-		method: "reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.change_status_to_close",
-		frm: cur_frm
+	frappe.call({
+		method:"reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.change_status_to_close",
+		args: {
+			"source_name": cur_frm.doc.name,
+		},
+		callback : function(r) {
+			cur_frm.reload_doc();
+		},
 	})
 }
 
+// Button - Reopen Close doc
+function reopen_hold_doc() {
+	frappe.call({
+		method:"reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.reopen_hold_doc",
+		args: {
+			"source_name": cur_frm.doc.name,
+		},
+		callback : function(r) {
+			cur_frm.reload_doc();
+		},
+	})
+}
+
+// Button - Reopen Hold doc	
+function reopen_close_doc() {
+	frappe.call({
+		method:"reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.reopen_close_doc",
+		args: {
+			"source_name": cur_frm.doc.name,
+		},
+		callback : function(r) {
+			cur_frm.reload_doc();
+		},
+	})
+}
 
 
 
