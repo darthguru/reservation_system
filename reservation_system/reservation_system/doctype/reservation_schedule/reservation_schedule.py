@@ -210,7 +210,7 @@ def get_items(**args):
 							""",as_dict=1)
 		return items
 
-#######################################################################################################################################
+#########################################################################################################################################
 
 # Hook -  This function update the delivered qty in reservation schedule items
 def update_delivered_qty(doc,event):	
@@ -297,13 +297,12 @@ def update_delivered_qty(doc,event):
 				rsi_doc = frappe.get_doc('Reservation Schedule Item', reservation_schedule_items.name )
 
 				reserve_item(rsi_doc, delivery_note_items.parent_warehouse)
-			
 			else:
 				delivery_note_without_reservation_schedule(doc.item_code,doc.warehouse)
 		else:
 			print('delivery note without any sales order (direct Delivery Note)')
 			delivery_note_without_reservation_schedule(doc.item_code,doc.warehouse)
-		
+
 #------------------------------------------------------- Purchase Receipt Items (GRN) ----------------------------------------------------
 	if doc.voucher_type == 'Purchase Receipt':
 		print('------------------------------------- voucher_type : Purchase Reciept ------------------------------------------')
@@ -454,7 +453,7 @@ def update_delivered_qty(doc,event):
 								msg = f'Only {open_qty} qty are allowed for Transfer'
 								frappe.throw(msg)
 
-#######################################################################################################################################
+#########################################################################################################################################
 
 #----------------------------------------------------------Hook on_cancel: Purchase Receipt------------------------------------------------
 def recalculate_reserve_qty_for_pr(doc,event):
@@ -587,7 +586,7 @@ def recalculate_reserve_qty_for_stock_entry(doc,event):
 		rsi_doc = frappe.get_doc('Reservation Schedule Item',j.name)
 		reserve_item(rsi_doc, j.parent_warehouse)
 
-########################################################################################################################################
+##########################################################################################################################################
 
 # --------------------------------------- Make Reservation Schedule from Sales Order ---------------------------------------------------
 @frappe.whitelist()
@@ -704,12 +703,12 @@ def make_pick_list(source_name, target_doc=None, skip_item_mapping=False):
 
 	return doc
 
-###################################################################################################################################
+##########################################################################################################################################
 
-# ------------------------------------------------- Change Status to Hold -----------------------------------------------------------
+# ------------------------------------------------- Change Status to HOLD -----------------------------------------------------------
 @frappe.whitelist()
 def change_status_to_hold(source_name, target_doc=None, skip_item_mapping=False):
-	print('--------------------------------------------- Hold ---------------------------------------------------------------')
+	print('----------------------------------------------------- Hold ---------------------------------------------------------------')
 	print('source_name: ',source_name)
 
 	rs = frappe.get_doc('Reservation Schedule',source_name)
@@ -723,12 +722,12 @@ def change_status_to_hold(source_name, target_doc=None, skip_item_mapping=False)
 												(select status from `tabReservation Schedule` as rs WHERE rs.name = parent) = 'Hold'
 												""",as_dict=1)
 	print('reservation_schedule_item: ',reservation_schedule_items)
-
+ 
 	if len(reservation_schedule_items) != 0:
 		for i in reservation_schedule_items:
 			frappe.db.set_value('Reservation Schedule Item',i.name,'reserve_qty',0)
 
-# ------------------------------------------------- Change Status to Close -----------------------------------------------------------
+# ------------------------------------------------- Change Status to CLOSE -----------------------------------------------------------
 @frappe.whitelist()
 def change_status_to_close(source_name):
 	print('----------------------------------------------- Close ---------------------------------------------------------')
@@ -749,7 +748,7 @@ def change_status_to_close(source_name):
 		for i in reservation_schedule_items:
 			frappe.db.set_value('Reservation Schedule Item',i.name,'reserve_qty',0)
 
-# ------------------------------------------------- Reopen doc whose status hold -----------------------------------------------------
+# ------------------------------------------------- Reopen doc whose status HOLD -----------------------------------------------------
 @frappe.whitelist()
 def reopen_hold_doc(source_name):
 	print('----------------------------------------------- Reopen Hold Doc ---------------------------------------------------------')
@@ -775,7 +774,7 @@ def reopen_hold_doc(source_name):
 			print('parent_warehouse_name: ',parent_warehouse_name)
 			reserve_item(rs,parent_warehouse_name[0].parent_warehouse)
 
-# ------------------------------------------------- Reopen doc whose status hold ------------------------------------------------------
+# ------------------------------------------------- Reopen doc whose status CLOSE ------------------------------------------------------
 @frappe.whitelist()
 def reopen_close_doc(source_name):
 	print('-----------------------------------------------Reopen Close Doc---------------------------------------------------------')
@@ -800,5 +799,5 @@ def reopen_close_doc(source_name):
 												""",as_dict=1)
 			print('parent_warehouse_name: ',parent_warehouse_name)
 			reserve_item(rs,parent_warehouse_name[0].parent_warehouse)
-	
-######################################################################################################################################
+
+#########################################################################################################################################

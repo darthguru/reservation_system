@@ -8,7 +8,7 @@ frappe.listview_settings['Reservation Schedule'] = {
         } else if(doc.status==="Close") {
             return [__("Close"), "red", "status,=,Close"];
         }else if(doc.status==="Hold") {
-            return [__("Hold"), "orange", "status,=,Hold"];
+            return [__("Hold"), "purple", "status,=,Hold"];
         }
     }
 }
