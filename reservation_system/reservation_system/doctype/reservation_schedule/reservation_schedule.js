@@ -168,6 +168,7 @@ function reopen_hold_doc() {
 		method:"reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.reopen_hold_doc",
 		args: {
 			"source_name": cur_frm.doc.name,
+			"parent_warehouse": cur_frm.doc.parent_warehouse,
 		},
 		callback : function(r) {
 			cur_frm.reload_doc();
@@ -181,6 +182,7 @@ function reopen_close_doc() {
 		method:"reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.reopen_close_doc",
 		args: {
 			"source_name": cur_frm.doc.name,
+			"parent_warehouse": cur_frm.doc.parent_warehouse,
 		},
 		callback : function(r) {
 			cur_frm.reload_doc();
