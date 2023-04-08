@@ -1,0 +1,158 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:RTE-{s_so_number}-{t_so_number}-{#####}",
+ "creation": "2023-03-31 23:04:05.376079",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "source_information_section",
+  "source_reservation_no",
+  "column_break_3",
+  "s_customer_name",
+  "s_so_number",
+  "s_parent_warehouse",
+  "target_information_section",
+  "column_break_8",
+  "target_reservation_no",
+  "column_break_10",
+  "t_customer_name",
+  "t_so_number",
+  "t_parent_warehouse",
+  "section_break_14",
+  "get_reserve_items",
+  "items",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "source_information_section",
+   "fieldtype": "Section Break",
+   "label": "Source Information"
+  },
+  {
+   "fieldname": "source_reservation_no",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Source Reservation No",
+   "options": "Reservation Schedule",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "source_reservation_no.customer",
+   "fieldname": "s_customer_name",
+   "fieldtype": "Data",
+   "label": "Customer Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "source_reservation_no.so_number",
+   "fieldname": "s_so_number",
+   "fieldtype": "Data",
+   "label": "SO Number",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "source_reservation_no.parent_warehouse",
+   "fieldname": "s_parent_warehouse",
+   "fieldtype": "Data",
+   "label": "Parent Warehouse",
+   "read_only": 1
+  },
+  {
+   "fieldname": "target_information_section",
+   "fieldtype": "Section Break",
+   "label": "Target Information"
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "target_reservation_no",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Target Reservation No",
+   "options": "Reservation Schedule",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "target_reservation_no.customer",
+   "fieldname": "t_customer_name",
+   "fieldtype": "Data",
+   "label": "Customer Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "target_reservation_no.so_number",
+   "fieldname": "t_so_number",
+   "fieldtype": "Data",
+   "label": "SO Number",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "target_reservation_no.parent_warehouse",
+   "fieldname": "t_parent_warehouse",
+   "fieldtype": "Data",
+   "label": "Parent warehouse",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_14",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "get_reserve_items",
+   "fieldtype": "Button",
+   "label": "Get Reserve Items"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Reservation Transfer Entry",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "items",
+   "options": "Reservation Transfer Entry Item"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2023-04-03 13:16:43.315432",
+ "modified_by": "Administrator",
+ "module": "Reservation System",
+ "name": "Reservation Transfer Entry",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

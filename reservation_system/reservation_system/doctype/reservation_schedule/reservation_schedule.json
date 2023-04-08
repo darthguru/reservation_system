@@ -122,11 +122,10 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-11-09 17:36:17.207200",
+ "modified": "2023-02-02 15:43:20.628353",
  "modified_by": "Administrator",
  "module": "Reservation System",
  "name": "Reservation Schedule",
- "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
@@ -144,5 +143,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "track_changes": 1,
+ "track_seen": 1
 }
