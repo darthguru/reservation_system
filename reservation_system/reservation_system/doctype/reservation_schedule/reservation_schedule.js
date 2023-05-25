@@ -37,7 +37,7 @@ frappe.ui.form.on('Reservation Schedule', {
 frappe.ui.form.on('Reservation Schedule', {
     so_number: function(frm) {
 	    let so_number = frm.doc.so_number;
-
+	    console.log(frm);
 	    if (so_number){
 	        frappe.call({
 	            method:'reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.get_items',
@@ -47,18 +47,69 @@ frappe.ui.form.on('Reservation Schedule', {
 	        }).done((r) => {
 
 	           frm.doc.items = []
-	           
 	           $.each(r.message, function(_i, e){
-				console.log(e)
 				let entry = frm.add_child('items');
-	               entry.item_code = e.item_code;
-	               entry.item_name = e.item_name;
-	               entry.qty = e.qty;
-                   entry.actual_qty = e.actual_qty;
-				   entry.description = e.description;
-				   entry.uom = e.uom;
-				   entry.rate = e.rate;
-				   entry.conversion_factor = e.conversion_factor;
+					entry.item_code = e.item_code;
+					entry.item_name = e.item_name;
+					entry.description = e.description;
+					entry.item_group = e.item_group;
+					entry.brand = e.brand;
+					entry.image = e.image;
+					entry.qty = e.qty;
+					entry.stock_uom = e.stock_uom;
+					entry.uom = e.uom;
+					entry.conversion_factor = e.conversion_factor;
+					entry.stock_qty = e.stock_qty;
+					entry.price_list_rate = e.price_list_rate;
+					entry.base_price_list_rate = e.base_price_list_rate;
+					entry.margin_type = e.margin_type;
+					entry.margin_rate_or_amount = e.margin_rate_or_amount;
+					entry.rate_with_margin = e.rate_with_margin;
+					entry.discount_percentage = e.discount_percentage;
+					entry.discount_amount = e.discount_amount;
+					entry.base_rate_with_margin = e.base_rate_with_margin;
+					entry.rate = e.rate;
+					entry.amount = e.amount;
+					entry.item_tax_template = e.item_tax_template;
+					entry.base_rate = e.base_rate;
+					entry.base_amount = e.base_amount;
+					entry.pricing_rules = e.pricing_rules;
+					entry.stock_uom_rate = e.stock_uom_rate;
+					entry.is_free_item = e.is_free_item;
+					entry.grant_commission = e.grant_commission;
+					entry.net_rate = e.net_rate;
+					entry.net_amount = e.net_amount;
+					entry.base_net_rate = e.base_net_rate;
+					entry.base_net_amount = e.base_net_amount;
+					entry.billed_amt = e.billed_amt;
+					entry.valuation_rate = e.valuation_rate;
+					entry.gross_profit = e.gross_profit;
+					entry.delivered_by_supplier = e.delivered_by_supplier;
+					entry.supplier = e.supplier;
+					entry.weight_per_unit = e.weight_per_unit;
+					entry.total_weight = e.total_weight;
+					entry.weight_uom = e.weight_uom;
+					entry.warehouse = e.warehouse;
+					entry.target_warehouse = e.target_warehouse;
+					entry.prevdoc_docname = e.prevdoc_docname;
+					entry.quotation_item = e.quotation_item;
+					entry.against_blanket_order = e.against_blanket_order;
+					entry.blanket_order = e.blanket_order;
+					entry.blanket_order_rate = e.blanket_order_rate;
+					entry.bom_no = e.bom_no;
+					entry.projected_qty = e.projected_qty;
+					entry.actual_qty = e.actual_qty;
+					entry.ordered_qty = e.ordered_qty;
+					entry.planned_qty = e.planned_qty;
+					entry.work_order_qty = e.work_order_qty;
+					entry.delivered_qty = e.delivered_qty;
+					entry.produced_qty = e.produced_qty;
+					entry.returned_qty = e.returned_qty;
+					entry.picked_qty = e.picked_qty;
+					entry.additional_notes = e.additional_notes;
+					entry.material_request_item = e.material_request_item;
+					entry.purchase_order_item = e.purchase_order_item;
+					entry.so_item_name = e.name;
 	           })
 	           refresh_field('items')
 	        })
@@ -75,24 +126,158 @@ frappe.ui.form.on('Reservation Schedule', {
 					quotation:quotation,
 				}
 	        }).done((r) => {
-
+				
 	           frm.doc.items = []
-           
+			   
 	           $.each(r.message, function(_i, e){
 	               let entry = frm.add_child('items');
-	               entry.item_code = e.item_code;
-	               entry.item_name = e.item_name;
-	               entry.qty = e.qty;
-                   entry.actual_qty = e.actual_qty;
-				   entry.description = e.description;
-				   entry.uom = e.uom;
-				   entry.rate = e.rate;
-				   entry.conversion_factor = e.conversion_factor;
+						entry.item_code = e.item_code;
+						entry.item_name = e.item_name;
+						entry.description = e.description;
+						entry.item_group = e.item_group;
+						entry.brand = e.brand;
+						entry.image = e.image;
+						entry.qty = e.qty;
+						entry.stock_uom = e.stock_uom;
+						entry.uom = e.uom;
+						entry.conversion_factor = e.conversion_factor;
+						entry.stock_qty = e.stock_qty;
+						entry.price_list_rate = e.price_list_rate;
+						entry.base_price_list_rate = e.base_price_list_rate;
+						entry.margin_type = e.margin_type;
+						entry.margin_rate_or_amount = e.margin_rate_or_amount;
+						entry.rate_with_margin = e.rate_with_margin;
+						entry.discount_percentage = e.discount_percentage;
+						entry.discount_amount = e.discount_amount;
+						entry.base_rate_with_margin = e.base_rate_with_margin;
+						entry.rate = e.rate;
+						entry.amount = e.amount;
+						entry.item_tax_template = e.item_tax_template;
+						entry.base_rate = e.base_rate;
+						entry.base_amount = e.base_amount;
+						entry.pricing_rules = e.pricing_rules;
+						entry.stock_uom_rate = e.stock_uom_rate;
+						entry.is_free_item = e.is_free_item;
+						entry.grant_commission = e.grant_commission;
+						entry.net_rate = e.net_rate;
+						entry.net_amount = e.net_amount;
+						entry.base_net_rate = e.base_net_rate;
+						entry.base_net_amount = e.base_net_amount;
+						entry.billed_amt = e.billed_amt;
+						entry.valuation_rate = e.valuation_rate;
+						entry.gross_profit = e.gross_profit;
+						entry.delivered_by_supplier = e.delivered_by_supplier;
+						entry.supplier = e.supplier;
+						entry.weight_per_unit = e.weight_per_unit;
+						entry.total_weight = e.total_weight;
+						entry.weight_uom = e.weight_uom;
+						entry.warehouse = e.warehouse;
+						entry.target_warehouse = e.target_warehouse;
+						entry.prevdoc_docname = e.prevdoc_docname;
+						entry.quotation_item = e.quotation_item;
+						entry.against_blanket_order = e.against_blanket_order;
+						entry.blanket_order = e.blanket_order;
+						entry.blanket_order_rate = e.blanket_order_rate;
+						entry.bom_no = e.bom_no;
+						entry.projected_qty = e.projected_qty;
+						entry.actual_qty = e.actual_qty;
+						entry.ordered_qty = e.ordered_qty;
+						entry.planned_qty = e.planned_qty;
+						entry.work_order_qty = e.work_order_qty;
+						entry.delivered_qty = e.delivered_qty;
+						entry.produced_qty = e.produced_qty;
+						entry.returned_qty = e.returned_qty;
+						entry.picked_qty = e.picked_qty;
+						entry.additional_notes = e.additional_notes;
+						entry.material_request_item = e.material_request_item;
+						entry.purchase_order_item = e.purchase_order_item;
+						entry.so_item_name = e.name;
 	           })
 	           refresh_field('items')
 	        })
 	    }
     },
+
+	// while selecting parent_warehouse it will populate items(neglecting the item whose delivery is done)
+	parent_warehouse: function(frm){
+		let so_number = frm.doc.so_number;
+	    if (so_number){
+	        frappe.call({
+	            method:'reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.get_items',
+	            args:{
+					so_number:so_number,
+				}
+	        }).done((r) => {
+
+	           frm.doc.items = []
+	           $.each(r.message, function(_i, e){
+				let entry = frm.add_child('items');
+					entry.item_code = e.item_code;
+					entry.item_name = e.item_name;
+					entry.description = e.description;
+					entry.item_group = e.item_group;
+					entry.brand = e.brand;
+					entry.image = e.image;
+					entry.qty = e.qty;
+					entry.stock_uom = e.stock_uom;
+					entry.uom = e.uom;
+					entry.conversion_factor = e.conversion_factor;
+					entry.stock_qty = e.stock_qty;
+					entry.price_list_rate = e.price_list_rate;
+					entry.base_price_list_rate = e.base_price_list_rate;
+					entry.margin_type = e.margin_type;
+					entry.margin_rate_or_amount = e.margin_rate_or_amount;
+					entry.rate_with_margin = e.rate_with_margin;
+					entry.discount_percentage = e.discount_percentage;
+					entry.discount_amount = e.discount_amount;
+					entry.base_rate_with_margin = e.base_rate_with_margin;
+					entry.rate = e.rate;
+					entry.amount = e.amount;
+					entry.item_tax_template = e.item_tax_template;
+					entry.base_rate = e.base_rate;
+					entry.base_amount = e.base_amount;
+					entry.pricing_rules = e.pricing_rules;
+					entry.stock_uom_rate = e.stock_uom_rate;
+					entry.is_free_item = e.is_free_item;
+					entry.grant_commission = e.grant_commission;
+					entry.net_rate = e.net_rate;
+					entry.net_amount = e.net_amount;
+					entry.base_net_rate = e.base_net_rate;
+					entry.base_net_amount = e.base_net_amount;
+					entry.billed_amt = e.billed_amt;
+					entry.valuation_rate = e.valuation_rate;
+					entry.gross_profit = e.gross_profit;
+					entry.delivered_by_supplier = e.delivered_by_supplier;
+					entry.supplier = e.supplier;
+					entry.weight_per_unit = e.weight_per_unit;
+					entry.total_weight = e.total_weight;
+					entry.weight_uom = e.weight_uom;
+					entry.warehouse = e.warehouse;
+					entry.target_warehouse = e.target_warehouse;
+					entry.prevdoc_docname = e.prevdoc_docname;
+					entry.quotation_item = e.quotation_item;
+					entry.against_blanket_order = e.against_blanket_order;
+					entry.blanket_order = e.blanket_order;
+					entry.blanket_order_rate = e.blanket_order_rate;
+					entry.bom_no = e.bom_no;
+					entry.projected_qty = e.projected_qty;
+					entry.actual_qty = e.actual_qty;
+					entry.ordered_qty = e.ordered_qty;
+					entry.planned_qty = e.planned_qty;
+					entry.work_order_qty = e.work_order_qty;
+					entry.delivered_qty = e.delivered_qty;
+					entry.produced_qty = e.produced_qty;
+					entry.returned_qty = e.returned_qty;
+					entry.picked_qty = e.picked_qty;
+					entry.additional_notes = e.additional_notes;
+					entry.material_request_item = e.material_request_item;
+					entry.purchase_order_item = e.purchase_order_item;
+					entry.so_item_name = e.name;
+	           })
+	           refresh_field('items')
+	        })
+	    }
+	}
 });
 
 //button 

@@ -116,8 +116,13 @@ doc_events = {
 	},
 	
 	"Stock Entry": {
-		"on_cancel": "reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.recalculate_reserve_qty_for_stock_entry",
+		"on_cancel": "reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.on_sales_order_item_update",
 	},
+
+	# "Sales Order": {
+    #     "on_change": "reservation_system.reservation_system.doctype.reservation_schedule.reservation_schedule.on_sales_order_item_update",
+	# },
+
 }
 
 # Scheduled Tasks

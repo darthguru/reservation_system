@@ -48,7 +48,7 @@ class ReservationTransferEntry(Document):
 										WHERE parent = '{target_res_no}' ORDER BY idx asc
 									""",as_dict=1)
 		# print('target_items: ',target_items)
-
+ 
 		for i in self.items:
 			transfer_qty = int(i.transfer_qty)
 			for j in target_items:

@@ -10,12 +10,12 @@ from frappe.utils.nestedset import get_descendants_of
 
 @frappe.whitelist()
 def custome_picklist(doc):
-    logging.basicConfig(filename='custome_piclist.txt', level=logging.DEBUG, format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S') # file mode --> filemode='w'
+    # logging.basicConfig(filename='custome_piclist.txt', level=logging.DEBUG, format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S') # file mode --> filemode='w'
     doc = json.loads(doc)
     # print('doc: ',doc)
-    logging.info('doc')
-    logging.debug(doc)
-    
+    # logging.info('doc')
+    # logging.debug(doc)
+
     locations = doc.get('locations')
     # print('locations: ',locations)
 
@@ -35,8 +35,8 @@ def custome_picklist(doc):
                                             )
                                         AND `tabBin`.item_code = '{item_code}'
                                     """,as_dict=1)[0]
-        logging.info('actual_qty')
-        logging.debug(actual_qty)
+        # logging.info('actual_qty')
+        # logging.debug(actual_qty)
 
         return actual_qty
 
@@ -81,10 +81,10 @@ def custome_picklist(doc):
 
         open_qty = actual_qty_in_wh - reserve_qty
         print('open_qty: ',open_qty)
-        logging.info('open_qty')
-        logging.debug(open_qty)
+        # logging.info('open_qty')
+        # logging.debug(open_qty)
 
-        if open_qty > 0 : 
+        if open_qty > 0 :
             if item_code not in filter_items:
                 filter_items[item_code] = {'item_code': item_code, 'actual_qty_in_wh': actual_qty_in_wh, 'open_qty': open_qty}
                 filter_item_code.append(item_code)
@@ -94,21 +94,21 @@ def custome_picklist(doc):
     print('filter_items: ',filter_items)
     print('filter_doc_locations: ',filter_doc_locations)
 
-    logging.info('filter_item_code')
-    logging.debug(filter_item_code)
+    # logging.info('filter_item_code')
+    # logging.debug(filter_item_code)
 
-    logging.info('filter_items')
-    logging.debug(filter_items)
+    # logging.info('filter_items')
+    # logging.debug(filter_items)
 
-    logging.info('filter_doc_locations')
-    logging.debug(filter_doc_locations)
+    # logging.info('filter_doc_locations')
+    # logging.debug(filter_doc_locations)
 
     for i in filter_item_code:
         item_code_2 = i
         temp = filter_items.get(item_code_2)
         open_qty_2 = temp['open_qty']
-        logging.info('open_qty_2')
-        logging.debug(open_qty_2)
+        # logging.info('open_qty_2')
+        # logging.debug(open_qty_2)
         print('open_qty_2: ',open_qty_2)
         for j in filter_doc_locations:
             if open_qty_2 > 0:
@@ -118,8 +118,8 @@ def custome_picklist(doc):
                         j['qty'] = j['qty']
                         j['stock_qty'] = j['qty']
                         my_picklist.append(j)
-                        logging.info('j In if')
-                        logging.debug(j)
+                        # logging.info('j In if')
+                        # logging.debug(j)
                         # filter_doc_locations.remove(j)
                     else:
                         remain = open_qty_2
@@ -127,17 +127,17 @@ def custome_picklist(doc):
                         j['stock_qty'] = remain
                         open_qty_2 = 0
                         my_picklist.append(j)
-                        logging.info('j In else')
-                        logging.debug(j)
+                        # logging.info('j In else')
+                        # logging.debug(j)
                         # filter_doc_locations.remove(j)
-                    logging.info('new_my_picklist')
-                    logging.debug(my_picklist)
+                    # logging.info('new_my_picklist')
+                    # logging.debug(my_picklist)
             else:
                 continue
     print('my_picklist: ',my_picklist)
 
-    logging.info('my_picklist')
-    logging.debug(my_picklist)
+    # logging.info('my_picklist')
+    # logging.debug(my_picklist)
 
     return my_picklist
 #------------------------------- /custome_picklist---------------------------------------------------
@@ -274,7 +274,7 @@ def custome_delivery_note(doc):
         bin_and_qty = {}
         from_warehouses = parent_warehouse
         required_qty = 0
-        
+
         rows = fetch_same_item_code(item_code) # contain similer item_code
         locations = get_available_item_locations(item_code, from_warehouses, required_qty, company)
         print('locations: ',locations)
