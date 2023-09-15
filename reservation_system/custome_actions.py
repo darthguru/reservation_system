@@ -328,3 +328,4 @@ def update_sales_order_status_to_cancel(**args):
     frappe.db.commit()
 
 #----------------------------/ Cancel Sales Order on click ------------------
+#
